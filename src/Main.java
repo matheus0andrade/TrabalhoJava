@@ -103,7 +103,7 @@ public class Main {
     public static void main(String[] args) {
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/airport_data", "matheus", "matheus");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/airport_data", "user", "password");
 
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("select * from aeroportos");
@@ -113,6 +113,8 @@ public class Main {
             // Se conseguimos realizar a query, agora passamos os dados obtidos para uma ArrayList, que será a "lista de aeroportos"
             while (rs.next())
                 airport_list.add(new Airport(rs.getString("nome"), rs.getString("iata"), rs.getString("cidade"), rs.getString("estado"), rs.getDouble("latitude"), rs.getDouble("longitude"), index++));
+
+            // Adiciona as conexões
             for(Airport var : airport_list)
                 for(Airport var2 : airport_list) {
                     var.addConnection(var.distanceTo(var2), var2);
